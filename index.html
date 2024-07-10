@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios API Example</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    #products{
+      display: flex;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="products"></div>
+
+  <script>
+    function fetchProducts() {
+      axios.get('https://fakestoreapi.com/products')
+        .then(response => {
+          renderProducts(response.data);
+        })
+        .catch(error => {
+          console.error('There was a problem with the axios operation:', error);
+        });
+    }
+
+    function renderProducts(products) {
+      const productsContainer = document.getElementById('products');
+      products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.innerHTML = `
+          <h2>${product.title}</h2>
+          <p>${product.description}</p>
+          <p>Price: $${product.price}</p>
+          <img src="${product.image}" alt="${product.title}" width="100">
+        `;
+        productsContainer.appendChild(productElement);
+      });
+    }
+
+    fetchProducts();
+
+   
+    
+  </script>
+</body>
+</html>
